@@ -1,6 +1,6 @@
 var Pom = (function(){
 
-  var WORK_MINUTES = 2,
+  var WORK_MINUTES = 25,
     BREAK_MINUTES = 5,
     MESSAGES = {
       '24': 'Off we go!',
@@ -41,7 +41,7 @@ var Pom = (function(){
     } else {
       // We just started again
       $( '#playpause' ).text('O');
-      interval = setInterval( updateTimer, 10 );
+      interval = setInterval( updateTimer, 1000 );
       isRunning = true;
     }
 

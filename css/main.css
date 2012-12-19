@@ -1,0 +1,87 @@
+/* #Main Styles
+================================================== */
+
+/* Fonts
+================ */
+body { font-size: 1.6em; line-height: 1.0em; }
+button { font-size: 2.0em; }
+
+.counts { line-height: 1.0em; }
+.sums { font-size: 1em; line-height: 1.0em; }
+#minutes { font-size: 10.0em; line-height: 1.0em; }
+#seconds { font-size: 5.0em; line-height: 1.0em; }
+
+footer { font-size: 0.66em; }
+
+body {
+	text-rendering: optimizeLegibility;
+	text-align: center;
+	font-size: 1.6em;
+	line-height: 1.0em;
+}
+
+.container {
+	width: 60%;
+	margin: 12% auto;
+}
+
+a {
+	text-decoration: none;
+}
+
+button {
+	font-family: "sosaregular";
+
+	cursor: pointer;
+	background: none;
+
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.counts span {
+	line-height: 1.0em;
+	float: left;
+}
+
+.controls {
+	clear: both;
+}
+
+.sums, footer {
+	margin-top: 3%;
+}
+
+.motd, .sums, .controls, .footer, #seconds {
+	opacity: 0.66;
+}
+
+footer {
+	position: absolute;
+	bottom: 5%;
+	left: 5%;
+}
+
+#minutes {
+	text-align: right;
+	width: 50%;
+}
+
+#seconds {
+	margin-top: 5.5%;
+}
+
+/* #Media Query Styles
+================================================== */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	body { font-size: 1.2em; }
+	#minutes { font-size: 8.0em; }
+	#seconds { font-size: 3.0em; }
+}
+
+@media only screen and (max-width: 479px) {
+	body { font-size: 1.0em; }
+	#minutes { font-size: 7.0em; }
+	#seconds { font-size: 2.5em; }
+}

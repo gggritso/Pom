@@ -1,0 +1,23 @@
+body, button {
+	color: #83001F;
+}
+
+body {
+	background: url(../img/groovepaper.png) repeat;
+}
+
+#seconds, a {
+	color: #BB0731;
+}
+
+a:hover {
+	color: #CF133F;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+
+   body {
+   	background: url(../img/groovepaper@2x.png) repeat;
+   }
+
+}

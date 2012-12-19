@@ -1,7 +1,14 @@
 var Pom = (function(){
 
-  var WORK_MINUTES = 25,
-    BREAK_MINUTES = 5;
+  var WORK_MINUTES = 2,
+    BREAK_MINUTES = 5,
+    MESSAGES = {
+      '24': 'Off we go!',
+      '20': 'Get it done!',
+      '12': 'About halfway there!',
+      '7': 'Keep at it!',
+      '1': 'Almost done!'
+    };
 
   var interval, currentMinute = WORK_MINUTES,
     currentSecond = 0,
@@ -12,7 +19,12 @@ var Pom = (function(){
   var resetTimer = function( minutes ) {
     currentMinute = minutes;
     currentSecond = 0;
-    updateTimer();
+    updateTimerText( currentMinute, currentSecond );
+  };
+
+  var updateTimerText = function( minutes, seconds ){
+    $( '#minutes' ).text( minutes );
+    $( '#seconds' ).text( ( seconds < 10 ) ? ':0' + seconds : ':' + seconds );
   };
 
   var toggleTimer = function() {
@@ -29,7 +41,7 @@ var Pom = (function(){
     } else {
       // We just started again
       $( '#playpause' ).text('O');
-      interval = setInterval( updateTimer, 1000 );
+      interval = setInterval( updateTimer, 10 );
       isRunning = true;
     }
 
@@ -38,79 +50,61 @@ var Pom = (function(){
   var updateTimer = function() {
     var msg, eod;
 
-    $( '#minutes' ).text( currentMinute );
-    $( '#seconds' ).text( ( currentSecond < 10 ) ? ':0' + currentSecond : ':' + currentSecond );
+    // Every minute see if we have a new message to show
+    if ( currentSecond === 59 ) {
+      msg = MESSAGES[currentMinute.toString()];
+      $( '.motd' ).text( msg );
+    }
 
-    if ( currentSecond === 0 ) {
+    // Decrement the timer, update the text
+    currentSecond -= 1;
+    if ( currentSecond === -1 ) {
       currentSecond = 60;
       currentMinute -= 1;
     }
+    updateTimerText( currentMinute, currentSecond );
 
-    currentSecond -= 1;
+    // When we hit 0:00 stop everything
     if ( currentMinute === 0 && currentSecond === 0 ) {
+      $( '#ding' )[0].play();
+      alert( 'Bingo!' );
       toggleTimer();
-      msg = 'Ready?';
 
       if ( currentCycle === 'work' ) {
-        currentCycle = 'break';
+
         resetTimer( BREAK_MINUTES );
-        todaysPoms += 1;
 
-        eod = new Date();
-        eod.setHours(23,59,59,999);
-
-        cookie.set( 'poms', todaysPoms.toString(), { expires: eod });
+        // Register a successful pom
+        eod = ( new Date() ).setHours(23,59,59,999);
+        console.log (todaysPoms + 1 );
+        cookie.set( 'poms', ( todaysPoms + 1 ).toString(), { expires: eod });
         $( '#todays_poms' ).text( todaysPoms );
 
         $( '#userstyle' ).attr( 'href', 'css/regular.css' );
+
       } else {
-        currentCycle = 'work';
+
         resetTimer( WORK_MINUTES );
         $( '#userstyle' ).attr( 'href', 'css/inverted.css' );
-      }
-    }
 
-    if ( currentSecond === 0 ) {
-      switch ( currentMinute ) {
-        case 24:
-          msg = 'Off we go!';
-          break;
-        case 20:
-          msg = 'Get it done!';
-          break;
-        case 12:
-          msg = 'About halfway there!';
-          break;
-        case 7:
-          msg = 'Keep at it!';
-          break;
-        case 1:
-          msg = 'Almost done!';
       }
-    }
 
-    $( '.motd' ).text( msg );
+      // Flip the cycle
+      currentCycle = ( currentCycle === 'work' ) ? 'break' : 'work';
+
+    }
 
   };
 
   var init = function() {
-
-    $( '#minutes' ).text( WORK_MINUTES );
-
-    todaysPoms = cookie.get( 'poms' );
-    if ( todaysPoms === undefined ) {
-      todaysPoms = 0;
-    }
-
-    todaysPoms = parseInt( todaysPoms, 10 );
+    todaysPoms = parseInt( cookie.get( 'poms' ) || 0, 0 );
     $( '#todays_poms' ).text( todaysPoms );
   };
 
   // Expose API
   return {
     init: init,
-    toggleTimer: toggleTimer,
-    resetTimer: resetTimer
+    toggleTimer: toggleTimer
   };
 
 })();

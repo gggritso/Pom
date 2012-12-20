@@ -59,7 +59,7 @@ var Pom = (function(){
     // Decrement the timer, update the text
     currentSecond -= 1;
     if ( currentSecond === -1 ) {
-      currentSecond = 60;
+      currentSecond = 59;
       currentMinute -= 1;
     }
     updateTimerText( currentMinute, currentSecond );

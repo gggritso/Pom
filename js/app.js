@@ -1,5 +1,6 @@
 var Pom = (function(){
 
+  // Constants
   var WORK_MINUTES = 25,
     BREAK_MINUTES = 5,
     MESSAGES = {
@@ -7,7 +8,8 @@ var Pom = (function(){
       '20': 'Get it done!',
       '12': 'About halfway there!',
       '7': 'Keep at it!',
-      '1': 'Almost done!'
+      '1': 'Almost done!',
+      '0': 'Ding ding!'
     };
 
   var interval, currentMinute = WORK_MINUTES,
@@ -29,9 +31,7 @@ var Pom = (function(){
 
   var toggleTimer = function() {
 
-    $( '.disappearing' ).animate({
-      'opacity': 'toggle'
-    }, 1000);
+    $( '.disappearing' ).fadeToggle(1000);
 
     if ( isRunning === true ) {
       // We just paused!
@@ -51,7 +51,7 @@ var Pom = (function(){
     var msg, eod;
 
     // Every minute see if we have a new message to show
-    if ( currentSecond === 59 ) {
+    if ( currentSecond === 0 ) {
       msg = MESSAGES[currentMinute.toString()];
       $( '.motd' ).text( msg );
     }
@@ -68,29 +68,30 @@ var Pom = (function(){
     if ( currentMinute === 0 && currentSecond === 0 ) {
       $( '#ding' )[0].play();
       alert( 'Bingo!' );
+      $( '.motd' ).text( 'Ding ding!' );
       toggleTimer();
 
       if ( currentCycle === 'work' ) {
+        currentCycle = 'break';
 
         resetTimer( BREAK_MINUTES );
 
         // Register a successful pom
-        eod = ( new Date() ).setHours(23,59,59,999);
-        console.log (todaysPoms + 1 );
+        eod = new Date();
+        eod.setHours(23, 59, 59, 999);
+
         cookie.set( 'poms', ( todaysPoms + 1 ).toString(), { expires: eod });
-        $( '#todays_poms' ).text( todaysPoms );
+        $( '#todays_poms' ).text( todaysPoms + 1 );
 
         $( '#userstyle' ).attr( 'href', 'css/regular.css' );
 
       } else {
+        currentCycle = 'work';
 
         resetTimer( WORK_MINUTES );
         $( '#userstyle' ).attr( 'href', 'css/inverted.css' );
 
       }
-
-      // Flip the cycle
-      currentCycle = ( currentCycle === 'work' ) ? 'break' : 'work';
 
     }
 

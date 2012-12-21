@@ -80,8 +80,9 @@ var Pom = (function(){
         eod = new Date();
         eod.setHours(23, 59, 59, 999);
 
-        cookie.set( 'poms', ( todaysPoms + 1 ).toString(), { expires: eod });
-        $( '#todays_poms' ).text( todaysPoms + 1 );
+        todaysPoms += 1;
+        cookie.set( 'poms', ( todaysPoms ).toString(), { expires: eod });
+        $( '#todays_poms' ).text( todaysPoms );
 
         $( '#userstyle' ).attr( 'href', 'css/regular.css' );
 
@@ -115,9 +116,7 @@ $(function() {
 
   Pom.init();
 
-  $( '#playpause' ).on( 'click', function() {
-    Pom.toggleTimer();
-  });
+  $( '#playpause' ).on( 'click', Pom.toggleTimer );
 
   $( 'body' ).on( 'keypress', function(e) {
     if (e.which === 32 ) {

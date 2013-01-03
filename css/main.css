@@ -16,6 +16,7 @@ body {
 	text-rendering: optimizeLegibility;
 	text-align: center;
 	min-width: 359px;
+	overflow: hidden;
 }
 
 audio {
@@ -33,6 +34,7 @@ a {
 
 button {
 	font-family: "sosaregular";
+	font-size: 1.25em;
 
 	cursor: pointer;
 	background: none;

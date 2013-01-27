@@ -67,6 +67,8 @@ var Pom = (function(){
     // When we hit 0:00 stop everything
     if ( currentMinute === 0 && currentSecond === 0 ) {
       $( '#ding' )[0].play();
+      $( '#ding')[0].currentTime = 0; // gotta rewind!
+
       alert( 'Bingo!' );
       $( '.motd' ).text( 'Ding ding!' );
       toggleTimer();

@@ -1,11 +1,11 @@
 # Pom
 
-A quick and neat Pomodoro timer.
+A quick and neat Pomodoro timer! I like to run this guy as a Fluid app while I work
 
-## Features
-- bare-bones interface
-- automatic 25/5 timer
+- super simple interface
+- `space` to start and stop timer
+- automatic 25/5 timing
 - visual and sound alerts
 - counts your Pomodoros every day
 
-[Demo](http://gggritso.github.com/Pom/)
+[You can find it here](http://gggritso.github.com/Pom/)

@@ -78,6 +78,19 @@ footer {
 
 /* #Media Query Styles
 ================================================== */
+
+@media only screen and (min-width: 1024px) {
+	body { font-size: 2.3em; }
+	#minutes { font-size: 8.75em; }
+	#seconds { font-size: 5.0em; }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 1023px) {
+	body { font-size: 1.85em; }
+	#minutes { font-size: 8.0em; }
+	#seconds { font-size: 4.8em; }
+}
+
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 	body { font-size: 1.2em; }
 	#minutes { font-size: 7.0em; }
